@@ -1,6 +1,9 @@
-#RPDGLE [Ropedle] i.e. doodle clone #
+# RPDGLE [Ropedle] i.e. doodle clone #
 
-simple stuff for now
+Simple stuff for now, FLask + SQLAlchemy + Postgresql
+
 ``pipenv shell``
+
 (``flask create_tables``)
+
 ``flask run``
