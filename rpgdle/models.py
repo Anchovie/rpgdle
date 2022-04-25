@@ -41,7 +41,7 @@ class Doodle(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow)
     dates = db.Column(db.Text)
 
-    participations = db.relationship("Participation", cascade="all, delete, delete-orphan", backref = "doodle", lazy=True, , primaryjoin="Doodle.id == Participation.doodle_id")
+    participations = db.relationship("Participation", cascade="all, delete, delete-orphan", backref = "doodle", lazy=True, primaryjoin="Doodle.id == Participation.doodle_id")
     #    participations = db.relationship("Participation", cascade="all, delete-orphan", """backref = db.backref("doodle", cascade="all, delete-orphan"),""" lazy=True)
 
     #dates = db.Column(db.ARRAY(db.DateTime))
