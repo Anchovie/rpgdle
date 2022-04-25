@@ -37,7 +37,7 @@ class Doodle(db.Model):
     description = db.Column(db.Text)
     time = db.Column(db.String(20))
     old = db.Column(db.Boolean)
-    creator = db.Column(db.Integer, db.ForeignKey("user.id"))
+    creator = db.Column(db.Integer, db.ForeignKey("User.id"))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     dates = db.Column(db.Text)
 
@@ -51,8 +51,8 @@ class Doodle(db.Model):
 class Participation(db.Model):
     __tablename__ = 'Participation'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    doodle_id = db.Column(db.Integer, db.ForeignKey("doodle.id")) #relationship("Doodle",onDelete="CASCADE")
+    user_id = db.Column(db.Integer, db.ForeignKey("User.id"))
+    doodle_id = db.Column(db.Integer, db.ForeignKey("Doodle.id")) #relationship("Doodle",onDelete="CASCADE")
     date = db.Column(db.String(20))
     status = db.Column(db.String(10))
     created = db.Column(db.DateTime, default=datetime.utcnow)
