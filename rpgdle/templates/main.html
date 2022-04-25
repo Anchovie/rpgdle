@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}
+RPG Doodle Clone
+{% endblock %}
+
+{% block content %}
+<h1> RPG Doodle Clone </h1>
+
+Open doodles:
+
+
+{% for doodle in doodles %}
+<a href=#>
+  <h3><a href="{{url_for('main.session',doodle_name=doodle.name)}}">{{ doodle.name }}</a></h3>
+  <p> {{doodle.description}}
+{% endfor %}
+{% endblock %}

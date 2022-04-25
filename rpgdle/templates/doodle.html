@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}
+RPG Doodle Clone
+{% endblock %}
+
+{% block head %}
+
+<script>
+  var dates = "{{doodle.dates}}";
+  var users = "{{users|safe}}";
+  var participations = "{{participations|safe}}";
+  var loggedIn = "{{current_user.name}}"
+  var loggedInId = "{{current_user.id}}"
+  const regex = /'/ig;
+  console.log("dates : " + dates);
+  console.log("participations:");
+  console.log(participations);
+  participations = JSON.parse(participations.replace(regex,"\""));
+  console.log(participations);
+  //console.log(participations[0].doodle_id);
+  console.log("end participations");
+  console.log("loggedIN = " + loggedIn + " = " + loggedInId);
+  console.log(users);
+  users = JSON.parse(users.replace(regex,"\""));
+  console.log(users);
+
+  console.log(users);
+  console.log(typeof(users));
+  </script>
+  <script src="{{ url_for('static', filename='doodle.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>{{doodle.name}}</h1>
+<h2>Kuvaus</h2>
+<p> {{doodle.description}}</p>
+</br>
+<h2> Luonut: {{creator}}, {{doodle.created}} </h2>
+Vanhentunut: {{doodle.old}}
+</br>
+
+
+<div id="calendar"> </div>
+<form method="POST" action="{{url_for('main.session',doodle_name=doodle.name)}}">
+  <input type="text" name="dates" hidden id="hiddenDays">
+  </br>
+  doodle.creator = {{doodle.creator}}
+  current_user.id = {{current_user.id}}
+  current_user.admin = {{current_user.admin}}
+  {% if doodle.creator == current_user.id or current_user.admin %}
+    <label for="delete">Poista koko hiton Doodle</label>
+    <input type="checkbox" name="deleteFlag" id="delete">
+  {% endif %}
+  </br>
+  <button type="submit">Tallenna </button>
+</form>
+
+{% endblock %}

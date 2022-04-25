@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}
+Create new RPGDLE
+{% endblock %}
+
+{% block head %}
+<link href="{{ url_for('static', filename='jquery-ui.multidatespicker.css') }}" rel="stylesheet">
+<script src="{{ url_for('static', filename='jquery-ui.multidatespicker.js')}}"></script>
+<script src="{{ url_for('static', filename='createDoodle.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+<h1> Luo uusi rpgdle [Ropedle] </h1>
+
+<form method="POST" action="{{url_for('main.create')}}">
+  <fieldset>
+    <label for="doodleName">Nimi</label>
+    <input type="text" name="name" id="doodleName" placeholder="Nimi">
+    <label for="doodleDescription">Kuvaus</label>
+    <textarea type="textarea" name="description" id="doodleDescription" placholder="Kuvaus"></textarea>
+    <label for="doodleDates"> Valitse päivät </label>
+    <input id="mdp">
+    <input hidden type="text" name="dates" id="hiddenDates">
+    <button type="submit">Luo</button>
+  </fieldset>
+  <!--
+  <table>
+    <tr>
+      <th> Monday </th>
+      <th> Tuesday </th>
+      <th> Wednesday </th>
+      <th> Thursday </th>
+      <th> Friday </th>
+      <th> Saturday </th>
+      <th> Sunday </th>
+    </tr>
+    <tr>
+      <td> choose </td>
+      <td> choose </td>
+      <td> choose </td>
+      <td> choose </td>
+      <td> choose </td>
+      <td> choose </td>
+      <td> choose </td>
+    </tr>
+    -->
+{% endblock %}

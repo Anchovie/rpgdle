@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}
+Kirjaudu RPGDLEen
+{% endblock %}
+
+{% block content %}
+<h1> Kirjaudu sisään </h1>
+
+<form method="POST" action="{{ url_for('auth.login')}}">
+  <fieldset >
+    <label for="inputName"> Name </label>
+    <input type="text" name="name" id="inputName" placeholder="Name">
+    <label for="inputPassword"> Password </label>
+    <input type="password" name="password" id="inputPassword">
+    <label for="passphrase"> Passphrase </label>
+    <input type="password" name="passphrase" id="inputPassphrase">
+    <button type="submit"> Login </button>
+  </fieldset>
+</form>
+{% endblock %}
