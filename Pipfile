@@ -9,6 +9,7 @@ flask-sqlalchemy = "*"
 python-dotenv = "*"
 flask-login = "*"
 psycopg2 = "*"
+gunicorn = "*"
 
 [dev-packages]
 
