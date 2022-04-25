@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash
 from .extensions import db
 
 class User(UserMixin, db.Model):
+    __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     password = db.Column(db.String(100))
@@ -30,6 +31,7 @@ class User(UserMixin, db.Model):
         return f"User('{self.id}', '{self.name}', '{self.admin}', )"
 
 class Doodle(db.Model):
+    __tablename__ = 'Doodle'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     description = db.Column(db.Text)
@@ -47,6 +49,7 @@ class Doodle(db.Model):
     #attendees = db.Column(db.ARRAY(db.ARRAY(db.ForeignKey("user.id"))))
 
 class Participation(db.Model):
+    __tablename__ = 'Participation'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     doodle_id = db.Column(db.Integer, db.ForeignKey("doodle.id")) #relationship("Doodle",onDelete="CASCADE")
