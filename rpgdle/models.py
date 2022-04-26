@@ -36,7 +36,7 @@ class Doodle(db.Model):
     description = db.Column(db.Text)
     time = db.Column(db.String(20))
     old = db.Column(db.Boolean)
-    creator = db.Column(db.Integer, db.ForeignKey("User.id"))
+    creator = db.Column(db.Integer, db.ForeignKey("user.id"))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     dates = db.Column(db.Text)
 
