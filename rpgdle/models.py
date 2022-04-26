@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):
     admin = db.Column(db.Boolean)
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
-    #participations = db.relationship("participation", backref="user", lazy=True, primaryjoin="user.id == participation.user_id")
+    participations = db.relationship("participation", backref="user", lazy=True)
 
     @property
     def unhashed_password(self):
