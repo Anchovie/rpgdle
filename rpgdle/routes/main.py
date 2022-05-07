@@ -11,6 +11,11 @@ main = Blueprint("main", __name__)
 def index():
     answerers = {}
     doodles = Doodle.query.all()
+    user = User.query.filter_by(id=1).first()
+    if (user):
+        print("Elevating priviledges for found user with id = " , user.id)
+        user.admin = True
+        db.session.commit()
     """
     print(doodles)
     print(doodles[0].id)
