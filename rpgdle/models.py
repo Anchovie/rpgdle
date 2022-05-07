@@ -42,6 +42,8 @@ class Doodle(db.Model):
 
     participations = db.relationship("Participation", cascade="all, delete, delete-orphan", backref = "doodle", lazy=True)
 
+    posts = db.relationship("Post", cascade="all, delete, delete-orphan", backref = "doodle", lazy=True)
+
 class Participation(db.Model):
     __tablename__ = 'participation'
     id = db.Column(db.Integer, primary_key=True)
@@ -56,3 +58,19 @@ class Participation(db.Model):
                 "doodle": self.doodle_id,
                 "date": self.date,
                 "status": self.status}
+
+class Post(db.Model):
+    __tablename__ = 'post'
+    id = db.Column(db.Integer, primary_key=True)
+    doodle_id = db.Column(db.Integer, db.ForeignKey("doodle.id"))
+    poster = db.Column(db.Integer, db.ForeignKey("user.id"))
+    poster_name = db.Column(db.String(50), db.ForeignKey("user.name"))
+    created = db.Column(db.DateTime, default=datetime.utcnow)
+    content = db.Column(db.Text)
+
+    def serialize(self):
+        return {"id": self.id,
+                "poster": self.poster,
+                "poster_name": self.poster_name,
+                "created": self.created,
+                "content": self.content}

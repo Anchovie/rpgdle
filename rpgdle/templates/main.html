@@ -10,8 +10,12 @@ Open doodles:
 
 
 {% for doodle in doodles %}
-<a href=#>
-  <h3><a href="{{url_for('main.session',doodle_name=doodle.name)}}">{{ doodle.name }}</a></h3>
-  <p> {{doodle.description}}
+  <div class="doodle_wrapper">
+    <h3><a href="{{url_for('main.session',doodle_name=doodle.name)}}">{{ doodle.name }}</a></h3>
+    <p> {{doodle.description}} </p>
+    {% for a in answerers[doodle.id] %}
+      <span class="answerer">{{a}} </span>
+    {% endfor %}
+  </div>
 {% endfor %}
 {% endblock %}

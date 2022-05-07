@@ -1,6 +1,6 @@
 from flask import Flask
 from .extensions import db, login_manager
-from .commands import create_tables
+from .commands import create_tables, drop_tables, database
 from .routes.main import main
 from .routes.auth import auth
 from .models import User
@@ -24,4 +24,6 @@ def create_app(config_file="settings.py"):
     app.register_blueprint(auth)
 
     app.cli.add_command(create_tables)
+    app.cli.add_command(drop_tables)
+    app.cli.add_command(database)
     return app

@@ -52,6 +52,17 @@ h1 {
   box-shadow: 4px 4px #fdfdfd;
 }
 
+
+.doodle_wrapper {
+  margin-top: 1rem;
+  background-color: #EFEFEF;
+}
+
+.answerer {
+  background-color: #AAEFAA;
+  margin: 2px;
+}
+
 #calendar {
   background-color: light-gray;
   border: 1px solid black;

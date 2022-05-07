@@ -2,7 +2,7 @@ $( document ).ready(function() {
     console.log( "ready!" );
     $("#mdp").multiDatesPicker({
     	dateFormat: "yy/mm/dd",
-      onClose: function() {
+      onSelect: function() {
         console.log("CHANGED: VAL");
         console.log($("#mdp").val());
         console.log($("#mdp").multiDatesPicker('value'));

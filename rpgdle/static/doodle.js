@@ -39,6 +39,8 @@ $( document ).ready(function() {
     let $attendCell = $("<div class='calendar_cell calendar_name "+ activeString +"' data-for='"+ curUser.id +"'>"+ curUser.name +"</div>");
     $column.append($attendCell);
   }
+  let $attendCell = $("<div class='calendar_cell calendar_name sum_header'></div>");
+  $column.append($attendCell);
   $("#calendar").append($column);
 
   for (let i = 0; i<=daysBetween; i++) {
@@ -68,7 +70,10 @@ $( document ).ready(function() {
       $column.append($attendCell);
     }
 
+    let $sumCell = $("<div class='calendar_cell sum_cell' data-index='"+i+"' data-time='"+ newDate.toLocaleDateString("en-ZA", options) +"'></div>");
+    $column.append($sumCell);
     $("#calendar").append($column);
+
   }
 
   for (p of participations){
@@ -86,6 +91,8 @@ $( document ).ready(function() {
   }
   $("#hiddenDays").val($("#hiddenDays").val().replaceAll(",,",","));
   console.log($("#hiddenDays").val());
+
+  updateAllSums();
 
   //$elem.append($row1);
   //$elem.append($row2);
@@ -109,9 +116,47 @@ $( document ).ready(function() {
           $("#hiddenDays").val( $("#hiddenDays").val() +$elem.attr("data-time")+",");
         }
       }
+      //updateSum($elem.attr("data-index"));
+      updateAllSums();
     }
     $("#hiddenDays").val($("#hiddenDays").val().replaceAll(",,",","));
     console.log($("#hiddenDays").val());
+  }
+
+  function updateAllSums() {
+    let max = 0, ind = 0;
+    for (let i = 0; i<=daysBetween; i++) {
+      //console.log("Checking i " + i + ", max = " + max)
+      let t = max;
+      let sum = updateSum(i);
+      max = Math.max(max, sum);
+      if (t <= sum) {
+        //console.log("New max found = " + max + " at index " + i);
+        ind = i;
+      }
+    }
+    $(".sum_cell","div[data-index="+ ind +"]").html("🎉 " + max + " 🎉");
+    //$(".sum_cell","div[data-index="+ ind +"]").addClass("highest");
+  }
+
+  function updateSum(index) {
+    //console.log(index);
+    $elems = $("div[data-index="+ index +"]");
+    //console.log("updatesum");
+    //console.log($elems);
+    sum=0;
+    for (e of $elems) {
+      //console.log(e);
+      if ($(e).hasClass("okay")) {
+        sum++;
+      } else if ($(e).hasClass("maybe")) {
+        sum+=0.5;
+      }
+    }
+    //console.log(sum);
+    $(".sum_cell","div[data-index="+ index +"]").html(sum);
+    return sum;
+    //get elems with index=index, count ok or maybe occurences yadaydada, attach to click update the sumcell
   }
 
 

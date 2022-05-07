@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, jsonify
 from flask_login import login_required, current_user
 from rpgdle.extensions import db
-from rpgdle.models import User, Doodle, Participation
+from rpgdle.models import User, Doodle, Participation, Post
 
 import datetime
 
@@ -9,8 +9,25 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
+    answerers = {}
     doodles = Doodle.query.all()
-    context = {"doodles": doodles}
+    """
+    print(doodles)
+    print(doodles[0].id)
+    print(Participation.query.filter_by(doodle_id=doodles[0].id).all())
+    print(Participation.query.filter_by(doodle_id=doodles[0].id).with_entities(Participation.user_id).all())
+    print(Participation.query.filter_by(doodle_id=doodles[0].id).with_entities(Participation.user_id).distinct().all())
+    """
+    for d in doodles:
+        names = []
+        uid = Participation.query.filter_by(doodle_id=d.id).with_entities(Participation.user_id).distinct().all()
+        for id in uid:
+            names.append(User.query.filter_by(id=id[0]).first().name)
+            answerers[d.id] = names
+    print(answerers)
+    print("ANSWERERS:")
+    #print(answerers)
+    context = {"doodles": doodles, "answerers": answerers}
     return render_template("main.html", **context)
 
 @main.route("/session/<string:doodle_name>", methods=["GET", "POST"])
@@ -68,11 +85,26 @@ def session(doodle_name):
 
         users = [u.serialize() for u in User.query.filter_by(admin=False).all()]
         participations = [p.serialize() for p in Participation.query.filter_by(doodle_id=doodle.id).all()]
+        posts = [o.serialize() for o in Post.query.filter_by(doodle_id=doodle.id).order_by(Post.created.desc()).all()]
         print(participations)
         print(User.query.filter_by(admin=False).all())
         print(users)
-        context = {"doodle": doodle, "creator": creator, "users":users, "participations":participations}
+        print(posts)
+        context = {"doodle": doodle, "creator": creator, "users":users, "participations":participations, "posts":posts}
         return render_template("doodle.html", **context)
+
+@main.route("/createPost/<string:doodle_name>", methods=["GET", "POST"])
+@login_required
+def createPost(doodle_name):
+    if request.method == "POST":
+        content = request.form["comment"]
+        doodle_id = Doodle.query.filter_by(name=doodle_name).first().id
+        print("doodle id for the doodle ",doodle_name)
+        print(doodle_id)
+        post = Post(poster=current_user.id, poster_name = current_user.name, doodle_id=doodle_id, content=content)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for("main.session",doodle_name=doodle_name))
 
 @main.route("/create", methods=["GET", "POST"])
 @login_required

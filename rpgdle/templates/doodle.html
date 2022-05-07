@@ -11,6 +11,7 @@ RPG Doodle Clone
   var participations = "{{participations|safe}}";
   var loggedIn = "{{current_user.name}}"
   var loggedInId = "{{current_user.id}}"
+  var posts = "{{posts|safe}}"
   const regex = /'/ig;
   console.log("dates : " + dates);
   console.log("participations:");
@@ -54,5 +55,23 @@ Vanhentunut: {{doodle.old}}
   </br>
   <button type="submit">Tallenna </button>
 </form>
+
+<form class="comment_form" method="POST" action="{{url_for('main.createPost',doodle_name=doodle.name)}}">
+  <label for="comment">Kommentoi</label>
+  <input type="textarea" name="comment" id="comment">
+  <button type="submit"> Lähetä </button>
+
+</form>
+
+<div class="posts_wrapper">
+  {% for p in posts %}
+  <div class="post">
+    <h3> {{p.poster_name}} | {{p.created.strftime('%Y-%m-%d %H:%M')}} </h3>
+    <p> {{p.content}} </p>
+    </br>
+  </div>
+  {% endfor %}
+
+</div>
 
 {% endblock %}
