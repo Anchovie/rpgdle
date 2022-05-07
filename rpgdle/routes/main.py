@@ -87,8 +87,8 @@ def session(doodle_name):
             print(doodle)
             return redirect(url_for("main.index"))
         creator = User.query.filter_by(id=doodle.creator).first().name
-
-        users = [u.serialize() for u in User.query""".filter_by(admin=False)""".all()]
+        #""".filter_by(admin=False)"""
+        users = [u.serialize() for u in User.query.all()]
         participations = [p.serialize() for p in Participation.query.filter_by(doodle_id=doodle.id).all()]
         posts = [o.serialize() for o in Post.query.filter_by(doodle_id=doodle.id).order_by(Post.created.desc()).all()]
         print(participations)
