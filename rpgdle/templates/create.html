@@ -10,18 +10,17 @@ Create new RPGDLE
 {% endblock %}
 
 {% block content %}
-<h1> Luo uusi rpgdle [Ropedle] </h1>
+<h1> Create new RPGDLE </h1>
 
-<form method="POST" action="{{url_for('main.create')}}">
-  <fieldset>
-    <label for="doodleName">Nimi</label>
-    <input type="text" name="name" id="doodleName" placeholder="Nimi">
-    <label for="doodleDescription">Kuvaus</label>
-    <textarea type="textarea" name="description" id="doodleDescription" placholder="Kuvaus"></textarea>
-    <label for="doodleDates"> Valitse päivät </label>
-    <input hidden type="text" name="dates" id="hiddenDates">
-    <div id="mdp">
-    <button type="submit">Luo</button>
-  </fieldset>
+<form id="createDoodle" method="POST" action="{{url_for('main.create')}}">
+  <label for="doodleName">Name</label>
+  <input type="text" name="name" id="doodleName" placeholder="Nimi">
+  <label for="doodleDescription">Description</label>
+  <textarea type="textarea" name="description" id="doodleDescription" placholder="Kuvaus"></textarea>
+  <label for="doodleDates"> Choose dates </label>
+  <div id="mdp"></div>
+  <input hidden type="text" name="dates" id="hiddenDays">
+  <button type="submit">Create</button>
+</form>
 
 {% endblock %}

@@ -12,11 +12,9 @@ def login():
     if request.method =="POST":
         name = request.form["name"]
         password = request.form["password"]
-        passphrase = request.form["passphrase"]
-        check = os.environ.get("LOGIN_SECRET")
         user = User.query.filter_by(name=name).first()
         error_message = ""
-        if not user or not check_password_hash(user.password, password) or not passphrase == check:
+        if not user or not check_password_hash(user.password, password):
             error_message = "Could not login. Check creds"
         if not error_message:
             login_user(user)
@@ -28,11 +26,14 @@ def register():
     if request.method == "POST":
         name = request.form["name"]
         unhashed_password = request.form["password"]
-
-        user = User(name=name, unhashed_password=unhashed_password, admin=False)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for("auth.login"))
+        passphrase = request.form["passphrase"]
+        check = os.environ.get("LOGIN_SECRET")
+        if passphrase == check:
+            user = User(name=name, unhashed_password=unhashed_password, admin=False)
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for("auth.login"))
+        return render_template("register.html")
 
     return render_template("register.html")
 

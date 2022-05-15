@@ -13,6 +13,7 @@ Open doodles:
   <div class="doodle_wrapper">
     <h3><a href="{{url_for('main.session',doodle_name=doodle.name)}}">{{ doodle.name }}</a></h3>
     <p> {{doodle.description}} </p>
+    <p class="participants_title"> Participants: </p>
     {% for a in answerers[doodle.id] %}
       <span class="answerer">{{a}} </span>
     {% endfor %}
