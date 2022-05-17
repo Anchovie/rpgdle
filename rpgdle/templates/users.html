@@ -7,11 +7,12 @@ Käyttäjät
 <h1> Käyttäjät </h1>
 Täs ois käyttäjälista
 <div id="userList">
+<ul>
 {% for user in users %}
-<a href=#>
+<li>
   <h3>{{ user.name }}</h3>
-
-
+</li>
 {% endfor %}
+</ul>
   </div>
 {% endblock %}

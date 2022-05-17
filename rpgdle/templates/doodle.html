@@ -33,10 +33,11 @@ RPG Doodle Clone
 
 {% block content %}
 <h1>{{doodle.name}}</h1>
+<h3> Luonut: {{creator}}, {{doodle.created.strftime('%Y-%m-%d %H:%M')}} </h3>
 <h2>Kuvaus</h2>
 <p> {{doodle.description}}</p>
 </br>
-<h2> Luonut: {{creator}}, {{doodle.created}} </h2>
+
 Vanhentunut: {{doodle.old}}
 </br>
 
@@ -45,22 +46,23 @@ Vanhentunut: {{doodle.old}}
 <form method="POST" action="{{url_for('main.session',doodle_name=doodle.name)}}">
   <input type="text" name="dates" hidden id="hiddenDays">
   </br>
+  <!--
   doodle.creator = {{doodle.creator}}
   current_user.id = {{current_user.id}}
   current_user.admin = {{current_user.admin}}
+  -->
   {% if doodle.creator == current_user.id or current_user.admin %}
     <label for="delete">Poista koko hiton Doodle</label>
     <input type="checkbox" name="deleteFlag" id="delete">
   {% endif %}
   </br>
-  <button type="submit">Tallenna </button>
+  <button id="submitParticipation" type="submit">Tallenna osallistuminen</button>
 </form>
 
 <form class="comment_form" method="POST" action="{{url_for('main.createPost',doodle_name=doodle.name)}}">
   <label for="comment">Kommentoi</label>
-  <input type="textarea" name="comment" id="comment">
-  <button type="submit"> Lähetä </button>
-
+  <input type="textarea" rows="5" name="comment" id="comment">
+  <button type="submit"> Add comment </button>
 </form>
 
 <div class="posts_wrapper">

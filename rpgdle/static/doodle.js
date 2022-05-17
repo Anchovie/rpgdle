@@ -33,13 +33,17 @@ $( document ).ready(function() {
   for (let j = 0; j<users.length; j++) {
     let curUser = users[j];
     let activeString = "";
+    let even = "row_odd";
     if (curUser.name == loggedIn) {
       activeString = "active";
     }
-    let $attendCell = $("<div class='calendar_cell calendar_name "+ activeString +"' data-for='"+ curUser.id +"'>"+ curUser.name +"</div>");
+    if (j%2 == 0) {
+      even = "row_even";
+    }
+    let $attendCell = $("<div class='calendar_cell calendar_name "+ even + " " +activeString +"' data-for='"+ curUser.id +"'>"+ curUser.name +"</div>");
     $column.append($attendCell);
   }
-  let $attendCell = $("<div class='calendar_cell calendar_name sum_header'></div>");
+  let $attendCell = $("<div class='calendar_cell calendar_name sum_header'>Σ</div>");
   $column.append($attendCell);
   $("#calendar").append($column);
 
@@ -51,7 +55,7 @@ $( document ).ready(function() {
       choosable = true;
     }
     let $column = $("<div class='column' data-choosable='" + choosable+ "' data-index='"+i+"' data-time='"+ newDate.toLocaleDateString("en-ZA", options) +"'></div>");
-    let header = "<div class='col-header'>";
+    let header = "<div class='col_header'>";
     header += "<div class='calendar_date' data-index='"+i+"'>" + newDate.toLocaleDateString(locale, options) + "</div>";
     header += "<div class='calendar_day'>" + newDate.toLocaleDateString("en-US", { weekday: 'long' }) + "</div>";
     header += "</div>";
@@ -59,7 +63,11 @@ $( document ).ready(function() {
 
     for (let j = 0; j<users.length; j++) {
       let curUser = users[j];
-      let $attendCell = $("<div class='calendar_cell' data-for='"+ curUser.id +"' data-index='"+i+"' data-time='"+ newDate.toLocaleDateString("en-ZA", options) +"' data-choosable='" + choosable+ "'></div>");
+      let even = "row_odd";
+      if (j%2 == 0) {
+        even = "row_even";
+      }
+      let $attendCell = $("<div class='calendar_cell " + even +"' data-for='"+ curUser.id +"' data-index='"+i+"' data-time='"+ newDate.toLocaleDateString("en-ZA", options) +"' data-choosable='" + choosable+ "'></div>");
 
       $attendCell.click(function(self) {
         console.log(self);

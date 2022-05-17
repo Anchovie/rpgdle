@@ -1,3 +1,68 @@
+:root {
+  --color-background: #0D0D0D;
+  --color-primary: #B444DB;
+  --color-secondary: #480460;
+  --color-lighter: #B344DB;
+  --color-font: #E9E9E9;
+  --color-font-secondary: #DEDEDE;
+  --color-black: #000000;
+
+  --color-bg-row1: rgba(180, 68, 219, 0.11);
+  --color-bg-row2: rgba(180, 68, 219, 0.2);
+
+  --shadow-button: 2px 2px 15px 1px #B444DB;
+
+  --font-size-h1: 36px;
+  --font-size-regular: 14px;
+  --font-size-button: 16px;
+
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  background-color: var(--color-secondary);
+  box-shadow:  var(--shadow-button);
+  color: #FFFFFF;
+  font-family: 'Macondo', cursive;
+  font-size: var(--font-size-button);
+  font-height: 19px;
+  width: 80px;
+  min-width: 100px;
+  height: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  box-shadow: 1px 3px 6px var(--color-primary);
+  filter: brightness(120%);
+}
+
+input[type="text"], input[type="textarea"], textarea, input[type="password"] {
+  all: unset;
+  cursor: text;
+  background-color: var(--color-black);
+  border-bottom: 1px solid var(--color-primary);
+  box-shadow: 0px 1px 4px var(--color-primary);
+  margin-bottom: 40px;
+  width: 60%;
+  padding: 10px;
+  transition: all 0.5s ease;
+}
+
+input[type="text"]:hover, textarea:hover, input:hover {
+  box-shadow: 1px 3px 6px var(--color-primary);
+  filter: brightness(120%);
+}
+
+h1 {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  font-size: var(--font-size-h1);
+}
+
+
 html,
 body {
   height:100%;
@@ -7,20 +72,27 @@ body {
   display:flex;
   flex-direction:column;
   align-items: center;
-  font-family: 'Libre Bodoni', serif;
+  /*font-family: 'Libre Bodoni', serif;*/
+  font-family: 'Macondo', cursive;
+  background-color: black;
+  color: var(--color-font);
 }
 
-h1 {
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+.header {
+  width: 100%;
 }
 
 .nav_container {
   display: flex;
+  align-items: center;
   flex-direction: row;
-  justify-content: space-around;
+  height: 80px;
+  width: 100%;
+  background-color: var(--color-background);
+  color: var(--color-font);
+  justify-content: space-between;
   font-size: 20px;
-  font-family: 'Raleway', sans-serif;
+  /*font-family: 'Raleway', sans-serif;*/
 }
 
 .nav_bar {
@@ -30,38 +102,135 @@ h1 {
 
 .nav_item {
   padding: 1rem;
-  background-color: gray;
-  color: black;
+  color: white;
   display: flex;
 }
+.header a { color: var(--color-font); }
+.header a:link { text-decoration: none; }
+.header a:visited { text-decoration: none; }
+.header a:hover { text-decoration: none; }
+.header a:active { text-decoration: none; }
 
 .nav_item a {
   text-decoration: none;
-  color: black;
+  color: white;
+}
+
+.nav_item a:after {
+  content: '';
+  display: block;
+  margin: auto;
+  height: 3px;
+  width: 0px;
+  background: transparent;
+  transition: width 0.25s ease, background-color .3s ease;
+}
+
+.nav_item a:hover:after {
+  width: 100%;
+  background: var(--color-primary);
 }
 
 .nav_item:hover {
-  background-color: white;
+  filter: brightness(110%);
 }
 
 .container {
   flex: 2 1 auto;
   max-width: 1000px;
+  width: 50%;
+  padding: 32px;
   align-self: center;
-  background-color: #fefefe;
-  box-shadow: 4px 4px #fdfdfd;
+  background-color: var(--color-background);
+  box-shadow: 2px 2px #090909;
 }
 
 
 .doodle_wrapper {
-  margin-top: 1rem;
-  background-color: #EFEFEF;
+  margin: 25px;
+  padding: 25px 20px 25px 20px;
+  background-color: #0D0D0D;
+  box-sizing: border-box;
+  border: 1px solid var(--color-primary);
+  box-shadow: 0px 0px 10px rgba(180, 68, 219, 0.5);
+
+}
+
+.participants_title {
+
 }
 
 .answerer {
-  background-color: #AAEFAA;
-  margin: 2px;
+  background-color: var(--color-lighter);
+  text-align: center;
+  padding: 2px 6px 2px 6px;
+  margin-right: 10px;
+  color: white;
 }
+
+.answerer:first-of-type {
+  margin-left: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form label {
+  margin-bottom: 8px;
+  /*align-self: flex-start;*/
+}
+
+form input {
+  margin-bottom: 40px;
+  height: 50px;
+}
+
+form textarea {
+  margin-bottom: 40px;
+  height: 80px;
+}
+
+form input[type="checkbox"] {
+  width: 40px;
+  height: 40px;
+}
+
+#createDoodle div {
+  align-self: center;
+}
+
+form button {
+  margin: 32px;
+  align-self: center;
+}
+#hiddenDays {
+  display: none;
+}
+
+#submitParticipation {
+  margin-top: -20px;
+  min-width: 170px;
+}
+
+#comment {
+  height: 100px;
+  margin-bottom: 0px;
+}
+
+.posts_wrapper {
+  margin-left: 16px;
+}
+
+#loginForm input, #registerForm input{
+  width: 200px;
+}
+
+
+
+/* CALENDAR */
 
 #calendar {
   background-color: light-gray;
@@ -73,6 +242,83 @@ h1 {
   flex-direction: row;
   align-items: stretch;
 }
+
+#calendar .row_odd {
+  background-color: var(--color-bg-row1);
+}
+
+#calendar .row_even {
+  background-color: var(--color-bg-row2);
+}
+
+#calendar .okay::after {
+  content: "✓";
+  position: relative;
+  left: 40%;
+  transform: translate(-50%, -25px);
+  font-size: 30px;
+  color: white;
+}
+
+#calendar .maybe::after {
+  content: "?";
+  position: relative;
+  left: 43%;
+  transform: translate(-50%, -25px);
+  font-size: 30px;
+  line-height: 44px;
+  color: white;
+}
+
+#calendar div[data-choosable="false"] {
+  background-color: black;
+}
+
+@media only screen and (max-width: 1000px) {
+
+  .container {
+    flex: 2 1 auto;
+    width: 100%;
+    align-self: center;
+  }
+
+  #calendar {
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+
+  .column {
+    flex: 1 1 0px;
+    display: flex;
+  }
+
+  .col_header {
+    display: flex;
+    flex: 1 1 75px;
+
+  }
+
+  .calendar_date {
+    width: 50%;
+  }
+  .calendar_day {
+    width: 50%;
+  }
+
+  .calendar_cell {
+    flex: 1 1 0;
+    width: 90px;
+    min-width: 50px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  div {
+    padding: 0px!important;
+  }
+
+}
+
 /*
 .daterow {
   display: flex;
@@ -123,20 +369,43 @@ h1 {
   width: 100%;
   border: 1px dashed gray;
 }
-
+/*
+.sum_cell {
+  flex: 1 4 0;
+}
+*/
 .calendar_name {
   background-color: white;
   border-right: 1px solid black;
   padding-left: 6px;
-  padding-right: 6px;
+  padding-right: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.sum_header {
+  background-color: black;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.sum_cell {
+  background-color: black;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .calendar_name.active {
-  background-color: #AAEEAA;
+  filter: brightness(120%);
+  font-weight: bold;
+  border: 2px solid var(--color-primary);
 }
 
-div[data-choosable="false"] {
-  background-color: gray!important;
+.calendar_cell.active {
+  border: 2px solid var(--color-primary);
 }
 
 .okay {
