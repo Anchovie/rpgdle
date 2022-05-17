@@ -1,6 +1,8 @@
 $( document ).ready(function() {
   const locale = "fi-FI";
+  //const options = {month: '2-digit', day: '2-digit' };
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const shortOps = {month: '2-digit', day: '2-digit' };
   console.log( "ready!" );
 
   var dateArr = dates.split(",");
@@ -25,8 +27,8 @@ $( document ).ready(function() {
 
   let $column = $("<div class='column row_header'></div>");
   let header = "<div class='col_header'>";
-  header += "<div class='calendar_date'> Date </div>";
-  header += "<div class='calendar_day'> Day </div>";
+  header += "<div class='calendar_date'> &nbsp;&nbsp;Date&nbsp;&nbsp;&nbsp; </div>";
+  header += "<div class='calendar_day'> &nbsp;&nbsp;Day&nbsp;&nbsp;&nbsp; </div>";
   header += "</div>";
   $column.append($(header));
 
@@ -56,8 +58,8 @@ $( document ).ready(function() {
     }
     let $column = $("<div class='column' data-choosable='" + choosable+ "' data-index='"+i+"' data-time='"+ newDate.toLocaleDateString("en-ZA", options) +"'></div>");
     let header = "<div class='col_header'>";
-    header += "<div class='calendar_date' data-index='"+i+"'>" + newDate.toLocaleDateString(locale, options) + "</div>";
-    header += "<div class='calendar_day'>" + newDate.toLocaleDateString("en-US", { weekday: 'long' }) + "</div>";
+    header += "<div class='calendar_date' data-index='"+i+"'>" + newDate.toLocaleDateString(locale, shortOps) + "</div>";
+    header += "<div class='calendar_day'>" + newDate.toLocaleDateString("en-US", { weekday: 'short' }) + "</div>";
     header += "</div>";
     $column.append($(header));
 
@@ -143,7 +145,7 @@ $( document ).ready(function() {
         ind = i;
       }
     }
-    $(".sum_cell","div[data-index="+ ind +"]").html("🎉 " + max + " 🎉");
+    $(".sum_cell","div[data-index="+ ind +"]").html("🎉" + max + "🎉");
     //$(".sum_cell","div[data-index="+ ind +"]").addClass("highest");
   }
 

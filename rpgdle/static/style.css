@@ -114,6 +114,13 @@ body {
 .nav_item a {
   text-decoration: none;
   color: white;
+  padding-left: 5px;
+}
+
+.nav_item.user {
+  word-wrap: break-word;
+  min-width: 90px;
+  padding-left: 5px;
 }
 
 .nav_item a:after {
@@ -253,21 +260,33 @@ form button {
 
 #calendar .okay::after {
   content: "✓";
+  /*
   position: relative;
+
   left: 40%;
   transform: translate(-50%, -25px);
+  */
   font-size: 30px;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #calendar .maybe::after {
   content: "?";
+  font-size: 30px;
+  /*
   position: relative;
   left: 43%;
   transform: translate(-50%, -25px);
-  font-size: 30px;
+  */
   line-height: 44px;
+
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #calendar div[data-choosable="false"] {
@@ -285,6 +304,7 @@ form button {
   #calendar {
     flex-direction: column;
     overflow-y: scroll;
+    overflow-x: scroll;
   }
 
   .column {
@@ -300,9 +320,17 @@ form button {
 
   .calendar_date {
     width: 50%;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .calendar_day {
     width: 50%;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .calendar_cell {
@@ -313,7 +341,7 @@ form button {
 }
 
 @media only screen and (max-width: 700px) {
-  div {
+  #calendar div {
     padding: 0px!important;
   }
 
@@ -346,20 +374,30 @@ form button {
 }
 .calendar_date {
   border: 1px solid gray;
+
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 6px;
+
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
 }
 
 .calendar_day {
   border: 1px solid gray;
+
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 6px;
   padding-bottom: 6px;
+
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
 }
 
