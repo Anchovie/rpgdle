@@ -10,7 +10,7 @@ main = Blueprint("main", __name__)
 @main.route("/")
 def index():
     answerers = {}
-    doodles = Doodle.query.all()
+    doodles = Doodle.query.order_by(Doodle.created.desc()).all()
     user = User.query.filter_by(id=1).first()
     if (user):
         print("Elevating priviledges for found user with id = " , user.id)
