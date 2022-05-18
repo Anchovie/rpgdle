@@ -214,7 +214,8 @@ form button {
   align-self: center;
 }
 #hiddenDays {
-  display: none;
+  visibility: hidden;
+  position: absolute;
 }
 
 #submitParticipation {

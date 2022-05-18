@@ -86,7 +86,11 @@ def session(doodle_name):
         if (not doodle):
             print(doodle)
             return redirect(url_for("main.index"))
-        creator = User.query.filter_by(id=doodle.creator).first().name
+        creator = User.query.filter_by(id=doodle.creator).first()
+        if (creator):
+            creator = creator.name
+        else:
+            creator = "Deleted user"
         #""".filter_by(admin=False)"""
         users = [u.serialize() for u in User.query.all()]
         participations = [p.serialize() for p in Participation.query.filter_by(doodle_id=doodle.id).all()]
@@ -130,10 +134,28 @@ def create():
     return render_template("create.html")
 
 
-@main.route("/users")
+@main.route("/users", methods=["GET", "POST"])
 @login_required
 def users():
-    users = User.query.filter_by(admin=False).all()
-    context = {"users": users}
+    if request.method == "POST":
+        print("Size of form: ", len(request.form))
+        print(request.form)
+        for action in request.form:
+            print(action)
+            target = action.split("-")[1]
+            print(action.split("-")[0])
+            print(target)
+            target_user = User.query.filter_by(id=target).first()
+            print(target_user)
+            if action.split("-")[0] == "promote" and target_user:
+                print("PROMOTING ", target_user.name)
+                target_user.admin = True
+            if action.split("-")[0] == "delete" and target_user:
+                print("DELETING ", target_user.name)
+                db.session.delete(target_user)
+            print("Commiting")
+            db.session.commit()
 
+    users = User.query.all()
+    context = {"users": users}
     return render_template("users.html", **context)
