@@ -28,8 +28,13 @@ def register():
         unhashed_password = request.form["password"]
         passphrase = request.form["passphrase"]
         check = os.environ.get("LOGIN_SECRET")
-        if passphrase == check:
-            user = User(name=name, unhashed_password=unhashed_password, admin=False)
+        check = check.split(",")
+        print("CHECK:");
+        print(check);
+        #if passphrase in check (array)
+        if passphrase in check:
+        #if passphrase == check:
+            user = User(name=name, unhashed_password=unhashed_password, groups=passphrase, admin=False)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for("auth.login"))

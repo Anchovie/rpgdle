@@ -17,6 +17,13 @@ Create new RPGDLE
   <input type="text" name="name" id="doodleName" placeholder="Nimi">
   <label for="doodleDescription">Description</label>
   <textarea type="textarea" rows="8" name="description" id="doodleDescription" placholder="Kuvaus"></textarea>
+  <label for="groups">Groups</label>
+  <!--<input type="text" name="groups" id="groups" placeholder="Group">-->
+  <select name="groups" id="groups" required multiple>
+      {% for g in groups %}
+        <option value="{{g}}">{{g}}</option>
+      {% endfor %}
+  </select>
   <label for="doodleDates"> Choose dates </label>
   <div id="mdp"></div>
   <input hidden type="text" name="dates" id="hiddenDays">

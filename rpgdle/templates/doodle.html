@@ -32,7 +32,7 @@ RPG Doodle Clone
 {% endblock %}
 
 {% block content %}
-<h1>{{doodle.name}}</h1>
+<h1>{{doodle.name | replace('-', ' ')}}</h1>
 <h3> Luonut: {{creator}}, {{doodle.created.strftime('%Y-%m-%d %H:%M')}} </h3>
 <h2>Kuvaus</h2>
 <p> {{doodle.description}}</p>
@@ -56,11 +56,11 @@ Vanhentunut: {{doodle.old}}
     <input type="checkbox" name="deleteFlag" id="delete">
   {% endif %}
   </br>
-  <button id="submitParticipation" type="submit">Tallenna osallistuminen</button>
+  <button id="submitParticipation" type="submit">Save submission</button>
 </form>
 
 <form class="comment_form" method="POST" action="{{url_for('main.createPost',doodle_name=doodle.name)}}">
-  <label for="comment">Kommentoi</label>
+  <label for="comment">Comment text</label>
   <input type="textarea" rows="5" name="comment" id="comment">
   <button type="submit"> Add comment </button>
 </form>

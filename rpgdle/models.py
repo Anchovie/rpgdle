@@ -10,6 +10,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(255))
     admin = db.Column(db.Boolean)
     created = db.Column(db.DateTime, default=datetime.utcnow)
+    groups = db.Column(db.String(255))
 
     participations = db.relationship("Participation", cascade="all, delete, delete-orphan", backref="user", lazy=True)
 
@@ -39,6 +40,7 @@ class Doodle(db.Model):
     creator = db.Column(db.Integer, db.ForeignKey("user.id"))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     dates = db.Column(db.Text)
+    groups = db.Column(db.String(255))
 
     participations = db.relationship("Participation", cascade="all, delete, delete-orphan", backref = "doodle", lazy=True)
 

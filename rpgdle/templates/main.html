@@ -11,8 +11,9 @@ Open doodles:
 
 {% for doodle in doodles %}
   <div class="doodle_wrapper">
-    <h3><a href="{{url_for('main.session',doodle_name=doodle.name)}}">{{ doodle.name }}</a></h3>
+    <h3><a href="{{url_for('main.session',doodle_name=doodle.name)}}">{{ doodle.name | replace('-', ' ') }}</a></h3>
     <p> {{doodle.description}} </p>
+    <p style="visibility: hidden;"> GROUPS: {{doodle.groups}} </p>
     <p class="participants_title"> Participants: </p>
     {% for a in answerers[doodle.id] %}
       <span class="answerer">{{a}} </span>

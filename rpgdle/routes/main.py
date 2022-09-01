@@ -10,6 +10,13 @@ main = Blueprint("main", __name__)
 @main.route("/")
 def index():
     answerers = {}
+    if (current_user.is_authenticated):
+        print(current_user)
+        own_groups = current_user.groups
+        print("OWN GROUPS:")
+        print(own_groups)
+        own_groups = own_groups.split(",")
+        print(own_groups)
     doodles = Doodle.query.order_by(Doodle.created.desc()).all()
     user = User.query.filter_by(id=1).first()
     if (user):
@@ -23,8 +30,36 @@ def index():
     print(Participation.query.filter_by(doodle_id=doodles[0].id).with_entities(Participation.user_id).all())
     print(Participation.query.filter_by(doodle_id=doodles[0].id).with_entities(Participation.user_id).distinct().all())
     """
+    group_doodles=[]
     for d in doodles:
         names = []
+        print("checking Doodle:")
+        print(d.name)
+        g = d.groups
+        print(g)
+        print(type(d.groups))
+        ### THIS IS NOT WORKING!!!!! ONLY THE FIRST IS SOMEHOW CHECKED ###
+        if (g):
+            g = g.split(",")
+            print("doodle groups:")
+            print(g)
+        else:
+            print("no groups for doodle");
+        print(own_groups)
+
+
+        if ( g and ( set(own_groups) & set(g) or set(g) & set(own_groups))):
+            print("COMMON GROUP FOUND =")
+            print(set(own_groups) & set(g))
+            group_doodles.append(d)
+        else:
+            print("NO COMMON GROUP for ")
+            print(set(own_groups))
+            print(set(g))
+            print(d)
+            #doodles.remove(d);
+            #print("removed")
+            continue
         uid = Participation.query.filter_by(doodle_id=d.id).with_entities(Participation.user_id).distinct().all()
         for id in uid:
             names.append(User.query.filter_by(id=id[0]).first().name)
@@ -32,7 +67,7 @@ def index():
     print(answerers)
     print("ANSWERERS:")
     #print(answerers)
-    context = {"doodles": doodles, "answerers": answerers}
+    context = {"doodles": group_doodles, "answerers": answerers}
     return render_template("main.html", **context)
 
 @main.route("/session/<string:doodle_name>", methods=["GET", "POST"])
@@ -120,18 +155,31 @@ def createPost(doodle_name):
 def create():
     if request.method == "POST":
         name = request.form["name"]
+        name = name.replace(" ", "-")
         description = request.form["description"]
         dates = request.form["dates"]
+        groups = request.form.to_dict(flat=False)["groups"]
+        groups_string=""
+        for g in groups:
+            groups_string+=(g+",")
+        if groups_string[-1] == ",":
+            groups_string = groups_string[:-1]
+        print("groups string:")
+        print(groups_string)
         creator = current_user.id
         old = False
         created = datetime.datetime.now()
-        doodle = Doodle(name=name, description = description, dates = dates, old=old, creator = creator, created = created)
+        doodle = Doodle(name=name, description = description, groups = groups_string, dates = dates, old=old, creator = creator, created = created)
         #user = User(name=name, unhashed_password=unhashed_password, admin=False)
         db.session.add(doodle)
         db.session.commit()
         return redirect(url_for("main.index"))
-
-    return render_template("create.html")
+    else: #GET
+        groups = current_user.groups.split(",")
+        print("SEnding current users group to create: ")
+        print(groups)
+        context = {"groups": groups}
+        return render_template("create.html", **context)
 
 
 @main.route("/users", methods=["GET", "POST"])
@@ -147,15 +195,33 @@ def users():
             print(target)
             target_user = User.query.filter_by(id=target).first()
             print(target_user)
+            if action.split("-")[0] == "groups" and target_user:
+                groups = request.form["groups-"+target]
+                if len(groups)!=0:
+                    print("New groups from form:")
+                    print(groups)
+                    print("Existing groups for user:")
+                    print(target_user.groups)
+                    if len(groups) != 0:
+                        print("ADDING GROUP!")
+                        if len(target_user.groups)!=0:
+                            groups+=","
+                        groups+=target_user.groups
+                        target_user.groups = groups
+                    print("NEW GROUPS:")
+                    print(target_user.groups)
             if action.split("-")[0] == "promote" and target_user:
                 print("PROMOTING ", target_user.name)
                 target_user.admin = True
+            if action.split("-")[0] == "ungroup" and target_user:
+                print("UNGROUPING ", target_user.name)
+                target_user.groups = ""
             if action.split("-")[0] == "delete" and target_user:
                 print("DELETING ", target_user.name)
                 db.session.delete(target_user)
             print("Commiting")
             db.session.commit()
-
+            groups = "";
     users = User.query.all()
     context = {"users": users}
     return render_template("users.html", **context)

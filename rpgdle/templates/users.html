@@ -11,20 +11,38 @@ Täs ois käyttäjälista
     <ul>
       {% for user in users %}
         <li>
-          <span>{{ user.name }} | </span>
-          <span>Admin: {{user.admin}} | </span>
-          <span>
-            <input class="admin_input" name="promote-{{user.id}}" type="checkbox">
-            <label for="promote-{{user.id}}">Promote</label>
-            <input class="admin_input" name="delete-{{user.id}}" type="checkbox">
-            <label for="delete-{{user.id}}">Poista</label>
-          </span>
           <ul>
-            {% for p in user.participations %}
-              <li>{{p.serialize()}}</li>
-            {% endfor %}
+              <li>
+                  <span>{{ user.name }} | </span>
+                  <span>Admin: {{user.admin}} | </span>
+                  <span>Groups: {{user.groups}} | </span>
+              </li>
+              <li>
+                  <span>
+                    <input class="admin_input" name="promote-{{user.id}}" type="checkbox">
+                    <label for="promote-{{user.id}}">Promote</label>
+                    <input class="admin_input" name="ungroup-{{user.id}}" type="checkbox">
+                    <label for="ungroup-{{user.id}}">Remove groups</label>
+                    <input class="admin_input" name="delete-{{user.id}}" type="checkbox">
+                    <label for="delete-{{user.id}}">Delete</label>
+                  </span>
+              </li>
+              <li>
+                  <span>
+                    <label for="groups">Add groups (,): </label>
+                    <input type="text" id="groups" name="groups-{{user.id}}"></input>
+                  </span>
+              </li>
+              <li>
+                  <ul>
+                    {% for p in user.participations %}
+                      <li>{{p.serialize()}}</li>
+                    {% endfor %}
+                  </ul>
+              </li>
           </ul>
         </li>
+        <hr/>
       {% endfor %}
     </ul>
   </div>

@@ -134,18 +134,26 @@ $( document ).ready(function() {
   }
 
   function updateAllSums() {
-    let max = 0, ind = 0;
+    let max = 0, ind = 0, arr=[]
     for (let i = 0; i<=daysBetween; i++) {
       //console.log("Checking i " + i + ", max = " + max)
       let t = max;
       let sum = updateSum(i);
+      arr[i] = sum;
       max = Math.max(max, sum);
       if (t <= sum) {
         //console.log("New max found = " + max + " at index " + i);
         ind = i;
       }
     }
-    $(".sum_cell","div[data-index="+ ind +"]").html("🎉" + max + "🎉");
+    let indexes = []
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === max) {
+        $(".sum_cell","div[data-index="+ i +"]").html("🎉" + max + "🎉");
+      }
+    }
+
+    //$(".sum_cell","div[data-index="+ ind +"]").html("🎉" + max + "🎉");
     //$(".sum_cell","div[data-index="+ ind +"]").addClass("highest");
   }
 
