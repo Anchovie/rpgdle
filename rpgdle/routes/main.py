@@ -17,6 +17,8 @@ def index():
         print(own_groups)
         own_groups = own_groups.split(",")
         print(own_groups)
+    else:
+        return render_template("main.html")
     doodles = Doodle.query.order_by(Doodle.created.desc()).all()
     user = User.query.filter_by(id=1).first()
     if (user):
@@ -45,7 +47,6 @@ def index():
             print(g)
         else:
             print("no groups for doodle");
-        print(own_groups)
 
 
         if ( g and ( set(own_groups) & set(g) or set(g) & set(own_groups))):

@@ -7,7 +7,9 @@ RPG Doodle Clone
 <h1> RPG Doodle Clone </h1>
 
 Open doodles:
-
+{% if doodles is not defined or doodles|length <= 0 %}
+    <p> Log in to see something 👀 </p>
+{% endif %}
 
 {% for doodle in doodles %}
   <div class="doodle_wrapper">
