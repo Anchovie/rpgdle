@@ -3,6 +3,9 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash
 from .extensions import db
 
+
+# sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table "user" violates foreign key constraint "post_poster_fkey" on table "post"
+# what?
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
