@@ -129,13 +129,46 @@ def session(doodle_name):
             creator = "Deleted user"
         #""".filter_by(admin=False)"""
         users = [u.serialize() for u in User.query.all()]
+        correct_users = []
+        if (current_user):
+            own_groups = current_user.groups
+            print(own_groups)
+            if len(own_groups.split(",")) < 1:
+                t = own_groups
+                own_groups = []
+                own_groups[0] = t
+            else:
+                own_groups = own_groups.split(",")
+            print("current user, looping users against")
+            for u in users:
+                print(u)
+                g = u["groups"]
+                print(g)
+                if (g):
+                    g = g.split(",")
+                    print("user groups:")
+                    print(g)
+                else:
+                    print("no groups for doodle");
+
+                if ( g and ( set(own_groups) & set(g) or set(g) & set(own_groups))):
+                    print("COMMON GROUP FOUND =")
+                    print(set(own_groups))
+                    print(set(own_groups) & set(g))
+                    correct_users.append(u)
+                else:
+                    print("NO COMMON GROUP for ")
+                    print(set(own_groups))
+                    print(set(g))
+                    continue
+
         participations = [p.serialize() for p in Participation.query.filter_by(doodle_id=doodle.id).all()]
         posts = [o.serialize() for o in Post.query.filter_by(doodle_id=doodle.id).order_by(Post.created.desc()).all()]
         print(participations)
         print(User.query.filter_by(admin=False).all())
         print(users)
         print(posts)
-        context = {"doodle": doodle, "creator": creator, "users":users, "participations":participations, "posts":posts}
+        context = {"doodle": doodle, "creator": creator, "users":correct_users, "participations":participations, "posts":posts}
         return render_template("doodle.html", **context)
 
 @main.route("/createPost/<string:doodle_name>", methods=["GET", "POST"])

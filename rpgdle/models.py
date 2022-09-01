@@ -28,7 +28,8 @@ class User(UserMixin, db.Model):
     def serialize(self):
         return {"id": self.id,
                 "name": self.name,
-                "admin": (0,1)[self.admin]}
+                "admin": (0,1)[self.admin],
+                "groups": self.groups}
 
     def __repr__(self):
         return f"User('{self.id}', '{self.name}', '{self.admin}', )"
